@@ -24,7 +24,18 @@ struct ListPlace {
     int taille;
 };
 
+struct CellID {
+    int ID;
+    struct CellID* next;
+};
+
+struct ListID {
+    struct CellID* head;
+    int taille;
+};
+
 struct Person {
+    int ID; //identifiant d'une personne donné dans le CSV
     char* familyName; //nom de famille
     char* name; //prenom
     char* date; //date de naissance
@@ -36,6 +47,7 @@ struct Person {
 };
 
 struct FamilyTree {
+    struct ListID* lID;
     int youngPerson;
     struct Person* young; //personne la plus jeune et aussi la racine de la famille
     int oldPerson;
@@ -54,10 +66,10 @@ void deleteListPerson(struct ListPerson* lp);
 
 struct CellPlace* createCellPlace(char* place);
 struct ListPlace* createListPlace(struct CellPlace* cpl);
-void addNewPlace(struct ListPlace* lpl, char* place);
+void addNewPlace(struct ListPlace* lpl, char* place); //lieu non présent dans la liste
 void upadePlace(struct ListPlace* lpl, char* place); //cas où l'on rappel un lieu deja existant + vérification avec valeur de bestPlace dans FamilyTree
 void deleteCellPlace(struct CellPlace* cpl);
-void deleteListPerson(struct ListPlace* lpl);
+void deleteListPlace(struct ListPlace* lpl);
 
 struct Person* createPerson(char* fName, char* name, char* date, char* birthPlace, struct Person* father, struct Person* mother); //ok
 struct FamilyTree* createFamily(char* fileName);
