@@ -3,6 +3,27 @@
 #include <stdbool.h>
 #include <string.h>
 
+struct CellPerson {
+    struct Person* p;
+    struct CellPerson* next;
+};
+
+struct ListPerson {
+    struct CellPerson* head;
+    int taille;
+};
+
+struct CellPlace {
+    char* place;
+    int birth;
+    struct CellPlace* next;
+};
+
+struct ListPlace {
+    struct CellPlace* head;
+    int taille;
+};
+
 struct Person {
     char* familyName;
     char* name;
@@ -11,7 +32,7 @@ struct Person {
     struct Person* father;
     struct Person* mother;
     char gender;
-    struct List* children;
+    struct ListPerson* children;
 };
 
 struct FamilyTree {
@@ -19,8 +40,8 @@ struct FamilyTree {
     struct Person* young;
     int oldPerson;
     struct Person* old;
-    struct List* place;
-    int posPlace;
+    struct ListPlace* Lplace;
+    struct CellPlace* bestPlace;
     int valPlace;
     int** calendar;
 };
