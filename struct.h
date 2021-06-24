@@ -26,7 +26,7 @@ struct FamilyTree {
 }
 
 struct Person* createPerson(char* fName, char* name, char* date, char* birthPlace, struct Person* father, struct Person* mother);
-struct FamilyTree* createFamily();
+struct FamilyTree* createFamily(char* fileName);
 bool isFamilyTreeEmpty (struct FamilyTree* f);
 void addPerson (struct FamilyTree* f, struct Person* p);
 struct Person* getOld (struct FamilyTree* f);
