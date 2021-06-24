@@ -12,7 +12,7 @@ struct Person {
     struct Person* mother;
     char gender;
     struct List* children;
-}
+};
 
 struct FamilyTree {
     int youngPerson;
@@ -23,7 +23,7 @@ struct FamilyTree {
     int posPlace;
     int valPlace;
     int** calendar;
-}
+};
 
 struct Person* createPerson(char* fName, char* name, char* date, char* birthPlace, struct Person* father, struct Person* mother);
 struct FamilyTree* createFamily(char* fileName);
