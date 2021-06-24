@@ -42,9 +42,22 @@ struct FamilyTree {
     struct Person* old;
     struct ListPlace* Lplace;
     struct CellPlace* bestPlace;
-    int valPlace;
+    int valBestPlace;
     int** calendar;
 };
+
+struct CellPerson* createCellPerson(struct Person* p);
+struct ListPerson* createListPerson(struct CellPerson* p);
+void addNewPerson(struct ListPerson* lp, struct Person* p);
+void deleteCellPerson(struct CellPerson* p);
+void deleteListPerson(struct ListPerson* p);
+
+struct CellPlace* createCellPlace(char* place);
+struct ListPerson* createListPlace(struct CellPlace* p);
+void addNewPlace(struct ListPerson* lp, char* place);
+void upadePlace(struct ListPerson* lp, char* place);
+void deleteCellPlace(struct CellPlace* p);
+void deleteListPerson(struct ListPlace* p);
 
 struct Person* createPerson(char* fName, char* name, char* date, char* birthPlace, struct Person* father, struct Person* mother);
 struct FamilyTree* createFamily(char* fileName);
