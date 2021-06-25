@@ -3,35 +3,23 @@
 #include <stdbool.h>
 #include <string.h>
 
-struct CellPerson {
-    struct Person* p;
-    struct CellPerson* next;
-};
-
-struct ListPerson {
-    struct CellPerson* head;
-    int taille;
-};
-
-struct CellPlace {
-    char* place; //lieu de naissance
-    int birth; //nombre de naissance du lieu
-    struct CellPlace* next;
-};
-
-struct ListPlace {
-    struct CellPlace* head;
-    int taille;
-};
+#define MAX_LETTERS 27
 
 struct CellID {
     int ID;
+    struct Person* p;
     struct CellID* next;
 };
 
 struct ListID {
     struct CellID* head;
     int taille;
+};
+
+struct PlacesTree {
+    struct PlacesTree* letters[MAX_LETTERS];
+    bool isWord;
+    int birth;
 };
 
 struct Person {
@@ -47,29 +35,31 @@ struct Person {
 };
 
 struct FamilyTree {
-    struct ListID* lID;
+    struct ListID* lID; //liste des membres d'une même famille
     int youngPerson;
     struct Person* young; //personne la plus jeune et aussi la racine de la famille
     int oldPerson;
     struct Person* old; //personne la plus vieille de la famille
-    struct ListPlace* Lplace; //liste des lieux de naissances
-    struct CellPlace* bestPlace; //lieu avec le plus de naissance
+    struct PlacesTree* places; //liste des lieux de naissances
+    char* bestPlace; //lieu avec le plus de naissance
     int valBestPlace; //valeur du lieu avec le plus de naissance
-    int** calendar; //calendrier contenant toutes les dates et le nombre d'anniverssaire de chacune
+    int** calendar; //calendrier contenant toutes les dates et le nombre d'anniverssaire de chaque jours
 };
 
-struct CellPerson* createCellPerson(struct Person* p);
-struct ListPerson* createListPerson(struct CellPerson* cp);
-void addNewPerson(struct ListPerson* lp, struct Person* p);
-void deleteCellPerson(struct CellPerson* cp);
-void deleteListPerson(struct ListPerson* lp);
+struct CellID* createCellID(struct Person* p);
+struct ListID* createListID(struct CellID* cid);
+void addNewID(struct ListID* lid, struct Person* p);
+void deleteCellID(struct CellID* cid);
+void deleteListID(struct ListID* lid);
 
-struct CellPlace* createCellPlace(char* place);
-struct ListPlace* createListPlace(struct CellPlace* cpl);
-void addNewPlace(struct ListPlace* lpl, char* place); //lieu non présent dans la liste
-void upadePlace(struct ListPlace* lpl, char* place); //cas où l'on rappel un lieu deja existant + vérification avec valeur de bestPlace dans FamilyTree
-void deleteCellPlace(struct CellPlace* cpl);
-void deleteListPlace(struct ListPlace* lpl);
+struct PlacesTree* createEmptyPlacesTree();
+void deletePlacesTree(struct PlacesTree* pt);
+struct PlacesTree** getLetters(struct PlacesTree* pt);
+bool getIsWord(struct PlacesTree* pt);
+void addLetter(struct PlacesTree* pt, char c);
+void setIsWord(struct PlacesTree* pt, bool newBool);
+void insertWord(struct PlacesTree* pt, char* word);
+int charToPos(char c);
 
 struct Person* createPerson(char* fName, char* name, char* date, char* birthPlace, struct Person* father, struct Person* mother); //ok
 struct FamilyTree* createFamily(char* fileName);
@@ -77,8 +67,8 @@ bool isFamilyTreeEmpty (struct FamilyTree* f); //ok
 void addPerson (struct FamilyTree* f, struct Person* p); //ok
 struct Person* getOld (struct FamilyTree* f); //ok
 struct Person* getYoung (struct FamilyTree* f); //ok
-int getBirthForPlace (struct FamilyTree* f, char* place); //ok
-char* getBestPlaceInBirth (struct FamilyTree* f); //ok
+int getBirthForPlace (struct FamilyTree* f, char* place); 
+char* getBestPlaceInBirth (struct FamilyTree* f); 
 int numberBirthForDate (struct FamilyTree* f, int day, int month); //ok
 
 void deleteFamilly (struct FamilyTree* f);
