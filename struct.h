@@ -46,6 +46,16 @@ struct FamilyTree {
     int** calendar; //calendrier contenant toutes les dates et le nombre d'anniverssaire de chaque jours
 };
 
+struct CellFamily {
+    struct FamilyTree* ft;
+    struct CellFamily* next;
+};
+
+struct ListFamily {
+    struct CellFamily* fhead;
+    int taille;
+};
+
 struct CellID* createCellID(struct Person* p);
 struct ListID* createListID(struct CellID* cid);
 void addNewID(struct ListID* lid, struct Person* p);
@@ -60,9 +70,11 @@ void addLetter(struct PlacesTree* pt, char c);
 void setIsWord(struct PlacesTree* pt, bool newBool);
 void insertWord(struct PlacesTree* pt, char* word);
 int charToPos(char c);
+int getBirthForPlace(struct PlacesTree* pt, char* word);
+void upadteBirthForPlace(struct PlacesTree* pt, char* word);
 
 struct Person* createPerson(char* fName, char* name, char* date, char* birthPlace, struct Person* father, struct Person* mother); //ok
-struct FamilyTree* createFamily(char* fileName);
+struct FamilyTree* createFamily();
 bool isFamilyTreeEmpty (struct FamilyTree* f); //ok
 void addPerson (struct FamilyTree* f, struct Person* p); //ok
 struct Person* getOld (struct FamilyTree* f); //ok
