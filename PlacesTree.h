@@ -23,6 +23,6 @@ void setIsWord(struct PlacesTree* pt, bool newBool);
 void insertWord(struct PlacesTree* pt, char* word);
 int charToPos(char c);
 int getBirthForPlace(struct PlacesTree* pt, char* word);
-void upadteBirthForPlace(struct PlacesTree* pt, char* word);
+void updateBirthForPlace(struct PlacesTree* pt, char* word);
 
 #endif
