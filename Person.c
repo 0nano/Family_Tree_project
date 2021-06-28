@@ -32,7 +32,7 @@ char* getName(struct Person* p){
 
 char* getBirthDate(struct Person* p){
     if(p != NULL){
-        char date[50];
+        char* date = malloc(50*sizeof(char));
 
         sprintf(date, "%d/%d/%d", p->day, p->month, p->years);
 
