@@ -22,7 +22,7 @@ struct PlacesTree* createEmptyPlacesTree(){
 void deletePlacesTree(struct PlacesTree* pt){
     for (int i = 0; i < MAX_LETTERS; i++){
         if (getLetters(pt)[i] != NULL){
-            deleteNodeTrie(getLetters(pt)[i]);
+            deletePlacesTree(getLetters(pt)[i]);
         }
     }
     free(pt);
@@ -37,7 +37,7 @@ bool getIsWord(struct PlacesTree* pt){
 }
 
 void addLetter(struct PlacesTree* pt, char c){
-    pt->letters[charToPos(c)] = createEmptyNodeTrie();
+    pt->letters[charToPos(c)] = createEmptyPlacesTree();
 }
 
 void setIsWord(struct PlacesTree* pt, bool newBool){

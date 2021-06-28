@@ -7,89 +7,63 @@
 #include "Person.h"
 
 unsigned int getID(struct Person* p){
-    return p->ID;
+    if(p != NULL){
+        return p->ID;
+    }else{
+        return 0;
+    }
 }
 
 char* getFamilyName(struct Person* p){
-    return p->familyName;
+    if(p != NULL){
+        return p->familyName;
+    }else{
+        return "Person does'nt find";
+    }
 }
 
 char* getName(struct Person* p){
-    return p->name;
+    if(p != NULL){
+        return p->name;
+    }else{
+        return "Person does'nt find";
+    }
 }
 
 char* getBirthDate(struct Person* p){
-    int day = p->day;
-    int month = p->month;
-    int year = p->years;
+    if(p != NULL){
+        char date[50];
 
-    char* date = malloc((11+1)*sizeof(char));
-
-        if(date == NULL){
-                printf("Problème lors de l'allocation\n");
-                exit(1);
-        }
-
-        int indice = 0;
-
-        if(day/10 != 0){
-                date[indice] = day/10+48;
-                indice++;
-        }
-
-        date[indice] = day%10+48;
-        indice++;
-
-        date[indice] = '/';
-        indice++;
-
-        if(month/10 != 0){
-                date[indice] = month/10+48;
-                indice++;
-        }
-
-        date[indice] = month%10+48;
-        indice++;
-
-        date[indice] = '/';
-        indice++;
-
-        if(year < 0){
-                date[indice] = '-';
-                indice++;
-        }
-
-        if(year/1000 != 0){
-                date[indice] = year/1000+48;
-                indice++;
-        }
-        if(year/100 != 0){
-                date[indice] = (year%1000)/100+48;
-                indice++;
-        }
-        if(year/10 != 0){
-                date[indice] = (year%100)/10+48;
-                indice++;
-        }
-
-        date[indice] = year%10+48;
-        indice++;
-
-        date[indice] = '\0';
+        sprintf(date, "%d/%d/%d", p->day, p->month, p->years);
 
         return date;
+    }else{
+        return "Person does'nt find";
+    }
 }
 
 char* getBirthPlace(struct Person* p){
-    return p->birthPlace;
+    if(p != NULL){
+        return p->birthPlace;
+    }else{
+        return "Person does'nt find";
+    }
 }
 
 struct Person* getFather(struct Person* p){
-    return p->father;
+    if(p != NULL){
+        return p->father;
+    }else{
+        return NULL;
+    }
 }
 
 struct Person* getMother(struct Person* p){
-    return p->mother;
+    if(p != NULL){
+        return p->mother;
+    }else{
+        return NULL;
+    }
 }
 
 int getTabPLength(struct TabPerson* tp){
@@ -97,7 +71,7 @@ int getTabPLength(struct TabPerson* tp){
 }
 
 struct Person* getYoungPerson(struct TabPerson* tp){
-    return tp->youngPerson;
+    return tp->young;
 }
 
 struct Person* getOldPerson(struct TabPerson* tp){

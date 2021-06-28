@@ -1,3 +1,6 @@
+#ifndef _PERSON_H
+#define _PERSON_H
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -41,8 +44,11 @@ struct Person* getMother(struct Person* p);
 
 void updateCalendar(struct TabPerson* tp, struct Person* p);
 void checkBestPlace(struct TabPerson* tp, struct Person* P);
+
 int getTabPLength(struct TabPerson* tp);
 struct Person* getYoungPerson(struct TabPerson* tp);
 struct Person* getOldPerson(struct TabPerson* tp);
 char* getBestPlace(struct TabPerson* tp);
 void showBirthForDate(struct TabPerson* tp, int day, int month);
+
+#endif

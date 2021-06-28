@@ -3,53 +3,138 @@
 #include <stdbool.h>
 #include <string.h>
 
-//#include "struct.h"
+#include "Menu.h"
 
 int main(){
 
     printf("WELCOME TO THE FAMILY TREE PROJECT!!!\n\n");
-    printf("What do you want to do?\n");
-    printf("------------------------\n");
-    printf("1. Read CSV file\n");
-    printf("2. Exit\n");
-    printf("------------------------\n");
-    printf("Your choice: ");
-
-    char choice;
-
-    choice = getc(stdin);
-
-    if (choice == '1'){
-        printf("\nRead CSV file\n");
-        printf("------------------------\n");
-        printf("Enter CSV file name: ");
-    }else{
-        if(choice == '2'){
-            printf("\nGood Bye :)\n");
-            return 0;
-        }else{
-            printf("\nWrong input :( !\n");
-        }
-    }
     
+    int good = 0;
+    
+    do{
+        showMenu();
+
+        char choice;
+
+        choice = getc(stdin);
+
+        switch (choice){
+            case '1':
+                printf("\nRead CSV file\n");
+                printf("------------------------\n");
+                printf("Enter CSV file name: ");
+                good++;
+                break;
+            case '2':
+                printf("\nGood Bye :)\n");
+                return 0;
+            default:
+                printf("\nWrong input :( !\n\n");
+                getc(stdin);
+                break;
+        }
+    }while(good==0);
+    
+    good = 0;
+
     char filename[50];
-
+    
     getc(stdin);
-
     scanf("%s[^\n]", filename);
+    
+    struct TabPerson* tp = NULL;
 
     printf("\nFile \"%s\" read successfully!\n", filename);
+    do{
+        showReadMenu();
 
-    printf("\nWhat do you want to do?\n");
-    printf("------------------------\n");
-    printf("1. Show family tree info\n");
-    printf("2. Export HTML family tree files\n");
-    printf("3. Export HTML info files\n");
-    printf("4. Export all files\n");
-    printf("5. Query family tree\n");
-    printf("6. Go back to principal menu\n");
-    printf("------------------------\n");
-    printf("Your choice: ");
+        char doChoice;
+        getc(stdin);
+        
+        doChoice = getc(stdin);
+
+        switch (doChoice){
+            case '1':
+                good = 1;
+                break;
+            case '2':
+                good = 2;
+                break;
+            case '3':
+                good = 3;
+                break;
+            case '4':
+                good = 4;
+                break;
+            case '5':
+                good = 5;
+                break;
+            case '6':
+                good = 6;
+                break;
+            default:
+                printf("\nWrong input :( !\n");
+                break;
+        }
+    
+
+        if(good==5){
+            do{
+                showQueryMenu();
+
+                char doChoice;
+                getc(stdin);
+        
+                doChoice = getc(stdin);
+
+                switch (doChoice){
+                    case '1':
+                        firstBorn(tp);
+                        break;
+                    case '2':
+                        lastBorn(tp);
+                        break;
+                    case '3':
+                        printf("Enter the place: ");
+                        getc(stdin);
+
+                        char lieu[150];
+                        scanf("%s[^\n]", lieu);
+
+                        nbPeopleInRegion(tp, lieu);
+                        break;
+                    case '4':
+                        bestPlace(tp);
+                        break;
+                    case '5':
+                        printf("Enter the day: ");
+                        getc(stdin);
+
+                        int day, month;
+                        scanf("%d", &day);
+
+                        getc(stdin);
+                        scanf("%d", &month);
+
+                        calendar(tp, day, month);
+                        break;
+                    case '6':
+                        printf("\nNothing here\n");
+                        break;
+                    case '7':
+                        printf("In construction\n");
+                        break;
+                    case '8':
+                        good = 0;
+                        break;
+                    default:
+                        printf("\nWrong input :( !\n");
+                        break;
+                }
+            }while(good!=0);
+        }
+
+    }while(good==0);
 
     return 0;
 }
