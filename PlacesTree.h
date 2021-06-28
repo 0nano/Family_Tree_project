@@ -17,6 +17,7 @@ struct PlacesTree {
 struct PlacesTree* createEmptyPlacesTree();
 void deletePlacesTree(struct PlacesTree* pt);
 struct PlacesTree** getLetters(struct PlacesTree* pt);
+bool isAlreadyPlace(struct PlacesTree* pt, char* word);
 bool getIsWord(struct PlacesTree* pt);
 void addLetter(struct PlacesTree* pt, char c);
 void setIsWord(struct PlacesTree* pt, bool newBool);
