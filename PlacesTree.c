@@ -32,25 +32,16 @@ struct PlacesTree** getLetters(struct PlacesTree* pt){
     return pt->letters;
 }
 
-bool isAlreadyPlace(struct PlacesTree* pt, char* word){
-    int n = strlen(word);
-    struct PlacesTree* triePointer = pt;
-
-    for (int i = 0; i < n; i++){
-        if (getLetters(triePointer)[charToPos(word[i])] == NULL){
-            return false;
-        }
-        triePointer = getLetters(triePointer)[charToPos(word[i])];
-    }
-
-    if(getIsWord(triePointer)){
-        return true;
-    }
-    return false;
-}
-
 bool getIsWord(struct PlacesTree* pt){
     return pt->isWord;
+}
+
+void upBirth(struct PlacesTree* pt){
+    pt->birth++;
+}
+
+int getBirth(struct PlacesTree* pt){
+    return pt->birth;
 }
 
 void addLetter(struct PlacesTree* pt, char c){
@@ -59,21 +50,6 @@ void addLetter(struct PlacesTree* pt, char c){
 
 void setIsWord(struct PlacesTree* pt, bool newBool){
     pt->isWord = newBool;
-}
-
-void insertWord(struct PlacesTree* pt, char* word){
-    int n = strlen(word);
-    struct PlacesTree* triePointer = pt;
-
-    for (int i = 0; i < n; i++){
-        if (getLetters(triePointer)[charToPos(word[i])] == NULL){
-            addLetter(triePointer, word[i]);
-        }
-        triePointer = getLetters(triePointer)[charToPos(word[i])];
-    }
-
-    setIsWord(triePointer, true);
-    triePointer->birth = 1;
 }
 
 int charToPos(char c){
@@ -94,26 +70,31 @@ int getBirthForPlace(struct PlacesTree* pt, char* word){
 
     for (int i = 0; i < n; i++){
         if (getLetters(triePointer)[charToPos(word[i])] == NULL){
-            break;
-        }else{
-            triePointer = getLetters(triePointer)[charToPos(word[i])];
+            return 0;
         }
+        triePointer = getLetters(triePointer)[charToPos(word[i])];
     }
 
-    return triePointer->birth;
+    return getBirth(triePointer);
 }
 
-void updateBirthForPlace(struct PlacesTree* pt, char* word){
+int updateBirthForPlace(struct PlacesTree* pt, char* word){
     int n = strlen(word);
     struct PlacesTree* triePointer = pt;
 
     for (int i = 0; i < n; i++){
         if (getLetters(triePointer)[charToPos(word[i])] == NULL){
-            break;
-        }else{
-            triePointer = getLetters(triePointer)[charToPos(word[i])];
+            addLetter(triePointer, word[i]);
         }
+        triePointer = getLetters(triePointer)[charToPos(word[i])];
     }
 
-    triePointer->birth++;
+    if(getIsWord(triePointer)){
+        upBirth(triePointer);
+        return getBirth(triePointer);
+    }else{
+        upBirth(triePointer);
+        setIsWord(triePointer, true);
+        return getBirth(triePointer);
+    }
 }

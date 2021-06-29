@@ -87,24 +87,45 @@ void showBirthForDate(struct TabPerson* tp, int day, int month){
     printf("\nNumber of Birth for %d/%d : %d\n", day, month, tp->calendar[month-1][day-1]);
 }
 
-struct Person* createPerson(unsigned int ID, char* fname, char* name, int day, int month, int years, char* birthPlace, struct Person* father, struct Person* mother){
-
+struct Person* createPerson(unsigned int ID, char* fname, char* name, int day, int month, int years, char* birthPlace, int fID, int mID){
+    printf("test\n");
     struct Person* p = malloc(sizeof(struct Person));
     if(p != NULL){
+        printf("test\n");
 
         p->ID = ID;
-        p->familyName = fname;
-        p->name = name;
         p->day = day;
         p->month = month;
         p->years = years;
-        p->birthPlace = birthPlace;
-        p->father = father;
-        p->mother = mother;
-
+        p->father = NULL;
+        p->mother = NULL;
+        p->fID = fID;
+        p->mID = mID;
+        printf("test\n");
+        int taille = strlen(name);
+        int taillef = strlen(fname);
+        int tailleb = strlen(fname);
+        printf("test\n");
+        char * firstName;
+        char * lastName;
+        char * Place;
+        printf("test\n");
+        firstName = malloc( (taille+1)*sizeof(char));
+        lastName = malloc( (taillef+1)*sizeof(char));
+        Place = malloc( (tailleb+1)*sizeof(char));
+        printf("test\n");
+        strcpy(firstName,name);
+        strcpy(lastName,fname);
+        strcpy(Place,birthPlace);
+        printf("test\n");
+        p->familyName = lastName;
+        p->name = firstName;
+        p->birthPlace = Place;
+        printf("test\n");
         return p;
     }
-    return NULL;
+    printf("Problème lors de l'allocation\n");
+    exit(1);
 }
 
 void updateYounger(struct TabPerson* tp, struct Person* p){
@@ -190,9 +211,26 @@ void updateTab(struct TabPerson* tp, int length){
         for (int i = 0; i < length; i++){
             tp->tab[i] = NULL;
         }
+
+        tp->length = length;
     }
 }
 
 void updateCalendar(int** calendar, struct Person* p){
+    printf("test 7 %d %d\n", p->day, p->month);
     calendar[p->month-1][p->day-1]++;
+    printf("test 8\n");
+}
+
+void updateParents(struct TabPerson* tp, struct Person* p){
+    if(tp != NULL && p != NULL){
+        unsigned int IDf = p->fID;
+        unsigned int IDm = p->mID;
+        if(IDf != 0){
+            p->father = tp->tab[IDf-1];
+        }
+        if(IDm != 0){
+            p->mother = tp->tab[IDm-1];
+        }
+    }
 }

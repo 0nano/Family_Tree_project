@@ -17,7 +17,9 @@ struct Person {
     int years; //
     char* birthPlace; //lieu de naissance
     struct Person* father;
+    unsigned int fID;
     struct Person* mother;
+    unsigned int mID;
 };
 
 struct TabPerson {
@@ -53,7 +55,7 @@ void updateTab(struct TabPerson* tp, int length);
 struct TabPerson* createEmptyTabPerson();
 void updateOlder(struct TabPerson* tp, struct Person* p);
 void updateYounger(struct TabPerson* tp, struct Person* p);
-struct Person* createPerson(unsigned int ID, char* fname, char* name, int day, int month, int years, char* birthPlace, struct Person* father, struct Person* mother);
-
+struct Person* createPerson(unsigned int ID, char* fname, char* name, int day, int month, int years, char* birthPlace, int fID, int mID);
+void updateParents(struct TabPerson* tp, struct Person* p);
 
 #endif

@@ -67,7 +67,7 @@ int main(){
                     case '2':
                         taille = getTabPLength(tp);
                 
-                        for (int i = 1; i <= taille; i++){
+                        for (int i = 0; i < taille; i++){
                             struct Person* temp = tp->tab[i];
                             generateur(temp);
                         }
@@ -84,7 +84,7 @@ int main(){
                     case '4':
                         taille = getTabPLength(tp);
                 
-                        for (int i = 1; i <= taille; i++){
+                        for (int i = 0; i < taille; i++){
                             struct Person* temp = tp->tab[i];
                             generateur(temp);
                         }
