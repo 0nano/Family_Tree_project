@@ -109,60 +109,48 @@ struct Person* createPerson(unsigned int ID, char* fname, char* name, int day, i
 
 void updateYounger(struct TabPerson* tp, struct Person* p){
 
-    if(tp->youngPersonYears < p->years){    //Si l'année de naissance de la nouvelle personne est plus grande que l'ancienne
-                                            //plus jeune personne je remplace les infos
-        tp->youngPersonDay = p->day;
-        tp->youngPersonMonth = p->month;
-        tp->youngPersonYears = p->years;
+    if(tp->young != NULL){
+    if(tp->young->years < p->years){    //Si l'année de naissance de la nouvelle personne est plus grande que l'ancienne
+                                        //plus jeune personne je remplace les infos
         tp->young = p;
-    }
-    if(tp->youngPersonYears == p->years){       //Si les années sont égales je compare les mois et remplace si besoin
-        if(tp->youngPersonMonth < p->month){
-
-            tp->youngPersonDay = p->day;
-            tp->youngPersonMonth = p->month;
-            tp->youngPersonYears = p->years;
+    }else{
+    if(tp->young->years== p->years){       //Si les années sont égales je compare les mois et remplace si besoin
+        if(tp->young->month < p->month){
             tp->young = p;
         }
-        if(tp->youngPersonMonth == p->month){   //Si les mois sont égaux je compare les jours et remplace si besoin
-            if(tp->youngPersonDay < p->day){
+        else{
+        if(tp->young->month == p->month){   //Si les mois sont égaux je compare les jours et remplace si besoin
+            if(tp->young->day < p->day){
 
-                tp->youngPersonDay = p->day;
-                tp->youngPersonMonth = p->month;
-                tp->youngPersonYears = p->years;
                 tp->young = p;
             }
-        }
+        }}
+    }}
+    }else{
+        tp->young = p;
     }
 
 }
 
 void updateOlder(struct TabPerson* tp, struct Person* p){
 
-    if(tp->oldPersonYears < p->years){    //Si l'année de naissance de la nouvelle personne est plus petite que l'ancienne
+    if(tp->old != NULL){
+        if(tp->old->years > p->years){    //Si l'année de naissance de la nouvelle personne est plus petite que l'ancienne
                                           //plus vieille personne je remplace les infos
-        tp->oldPersonDay = p->day;
-        tp->oldPersonMonth = p->month;
-        tp->oldPersonYears = p->years;
-        tp->old = p;
-    }
-    if(tp->oldPersonYears == p->years){       //Si les années sont égales je compare les mois et remplace si besoin
-        if(tp->oldPersonMonth > p->month){
-
-            tp->oldPersonDay = p->day;
-            tp->oldPersonMonth = p->month;
-            tp->oldPersonYears = p->years;
             tp->old = p;
-        }
-        if(tp->oldPersonMonth == p->month){   //Si les mois sont égaux je compare les jour et remplace si besoin
-            if(tp->oldPersonDay > p->day){
-
-                tp->oldPersonDay = p->day;
-                tp->oldPersonMonth = p->month;
-                tp->oldPersonYears = p->years;
+        }else{
+        if(tp->old->years == p->years){       //Si les années sont égales je compare les mois et remplace si besoin
+            if(tp->old->month > p->month){
                 tp->old = p;
-            }
-        }
+            }else{
+            if(tp->old->month == p->month){   //Si les mois sont égaux je compare les jour et remplace si besoin
+                if(tp->old->day > p->day){
+                    tp->old = p;
+                }
+            }}
+        }}
+    }else{
+        tp->old = p;
     }
 }
 
@@ -170,10 +158,10 @@ struct TabPerson* createEmptyTabPerson(){
 
     struct TabPerson* tp = malloc(sizeof(struct TabPerson));
     if(tp != NULL){
-
-        tp->oldPersonYears = 3000;          //Je mets des valeurs aberrantes pour être sur que le plus vieux et plus jeune
-        tp->youngPersonYears = -6000;       //s'actualise(ça ne marchera pas si quelqu'un veut faire l'arbre généalogique de cléôpatre)
+        tp->tab = NULL;
         tp->length = 0;
+        tp->young = NULL;
+        tp->old = NULL;
         tp->calendar = malloc(sizeof(int*)*12);
         if(tp->calendar != NULL){
             for (int k = 0; k < 12; k++) {
@@ -191,7 +179,20 @@ struct TabPerson* createEmptyTabPerson(){
     return NULL;
 }
 
-void updateCalendar(int** calendar, struct Person* p){
+void updateTab(struct TabPerson* tp, int length){
+    if(tp != NULL){
+        tp->tab = malloc(length*sizeof(struct Person*));
+        if (tp->tab == NULL){
+            printf("Problème lors de l'allocation\n");
+            exit(1);
+        }
 
-    calendar[p->month][p->day]++;
+        for (int i = 0; i < length; i++){
+            tp->tab[i] = NULL;
+        }
+    }
+}
+
+void updateCalendar(int** calendar, struct Person* p){
+    calendar[p->month-1][p->day-1]++;
 }
