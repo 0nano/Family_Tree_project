@@ -24,9 +24,13 @@ struct TabPerson {
     struct Person** tab;
     int length;
 
-    int youngPerson;
+    unsigned int youngPersonDay;
+    unsigned int youngPersonMonth;
+    int youngPersonYears;
     struct Person* young; //personne la plus jeune et aussi la racine de la famille
-    int oldPerson;
+    unsigned int oldPersonDay;
+    unsigned int oldPersonMonth;
+    int oldPersonYears;
     struct Person* old; //personne la plus vieille de la famille
     struct PlacesTree* places; //liste des lieux de naissances
     char* bestPlace; //lieu avec le plus de naissance
@@ -42,7 +46,7 @@ char* getBirthPlace(struct Person* p);
 struct Person* getFather(struct Person* p);
 struct Person* getMother(struct Person* p);
 
-void updateCalendar(struct TabPerson* tp, struct Person* p);
+void updateCalendar(int** calendar, struct Person* p);
 void checkBestPlace(struct TabPerson* tp, struct Person* P);
 
 int getTabPLength(struct TabPerson* tp);
@@ -50,5 +54,10 @@ struct Person* getYoungPerson(struct TabPerson* tp);
 struct Person* getOldPerson(struct TabPerson* tp);
 char* getBestPlace(struct TabPerson* tp);
 void showBirthForDate(struct TabPerson* tp, int day, int month);
+
+struct Person* createPerson(unsigned int ID, char* fname, char* name, int day, int month, int years, char* birthPlace, struct Person* father, struct Person* mother);
+void updateYounger(struct TabPerson* tp, struct Person* p);
+void updateOlder(struct TabPerson* tp, struct Person* p);
+struct TabPerson* createEmptyTabPerson();
 
 #endif
