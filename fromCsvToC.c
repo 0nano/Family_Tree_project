@@ -22,7 +22,7 @@ struct TabPerson* fromCsvToC(char* fichier){
 
         for (int i = 0; i < csvLength; i++) {
             struct Person *new;
-            char *name, *fname, *birthPlace, string[10000];
+            char *name, *fname, *birthPlace, string[100000];
             unsigned int day, month, ID, motherID, fatherID;
             int years;
 
@@ -46,7 +46,7 @@ struct TabPerson* fromCsvToC(char* fichier){
             day = atoi(dayChar);                                    //
             month = atoi(monthChar);                                //Je mets la date en nombres entiers
             years = atoi(yearChar);                                 //
-            
+
             if(motherID == 0 && fatherID == 0){
                 new = createPerson(ID, fname, name, day, month, years, birthPlace, NULL, NULL);
             }else{
@@ -65,21 +65,21 @@ struct TabPerson* fromCsvToC(char* fichier){
             updateYounger(tp, new);               //Je vérifie si la nouvelle personne est la plus jeune
             updateOlder(tp, new);                 //Je vérifie si la nouvelle personne est la plus vieille
             
-            if (!(isAlreadyPlace(tp->places, birthPlace))) {  //Si le lieu de naissance n'existe pas je l'ajoute
+            if (!isAlreadyPlace(tp->places, birthPlace)) {  //Si le lieu de naissance n'existe pas je l'ajoute
                 insertWord(tp->places, birthPlace);
             } else {
                 updateBirthForPlace(tp->places, birthPlace);  //Sinon j'actualise le nombre de naissance dans le lieu correspondant
             }
             if ((getBirthForPlace(tp->places, birthPlace)) > tp->valBestPlace) {
-
-                tp->valBestPlace = getBirthForPlace(tp->places,
-                                                    birthPlace);  //Si le lieu de naissance de la nouvelle personne est le
+                tp->valBestPlace = getBirthForPlace(tp->places,birthPlace);  //Si le lieu de naissance de la nouvelle personne est le
                 tp->bestPlace = birthPlace;                                   //nouveau lieu avec le plus de naissance je l'actualise
             }
+            printf("%s\n", tp->bestPlace);
 
             updateCalendar(tp->calendar, new);    //J'actualise les anniversaires dans le calendrier
-            printf("test 6\n");
+            
         }
+        printf("OK\n");
         return tp;
     }
     return NULL;

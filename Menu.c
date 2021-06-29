@@ -44,32 +44,38 @@ void showQueryMenu(){
 }
 
 void familyInfo(struct TabPerson* tp){
-
+    printf("\nFamily info\nFirst person born:\n");
+    firstBorn(tp);
+    printf("Last person born:\n");
+    lastBorn(tp);
+    printf("First place in birth:\n");
+    bestPlace(tp);
 }
 
 void firstBorn(struct TabPerson* tp){
     struct Person* p = getYoungPerson(tp);
 
+    printf("Name: %s, ", getName(p));
     printf("Family name: %s\n", getFamilyName(p));
-    printf("Birth date: %s", getBirthDate(p));
-    printf("Birth place: %s", getBirthPlace(p));
+    printf("Birth date: %s, ", getBirthDate(p));
+    printf("Birth place: %s\n", getBirthPlace(p));
 }
 
 void lastBorn(struct TabPerson* tp){
     struct Person* p = getOldPerson(tp);
 
+    printf("Name: %s, ", getName(p));
     printf("Family name: %s\n", getFamilyName(p));
-    printf("Name: %s\n", getName(p));
-    printf("Birth date: %s", getBirthDate(p));
-    printf("Birth place: %s", getBirthPlace(p));
+    printf("Birth date: %s, ", getBirthDate(p));
+    printf("Birth place: %s\n", getBirthPlace(p));
 }
 
 void nbPeopleInRegion(struct TabPerson* tp, char* word){
-    printf("Number of birth for \"%s\": %d", word, getBirthForPlace(tp->places, word));
+    printf("\nNumber of birth for \"%s\": %d\n", word, getBirthForPlace(tp->places, word));
 }
 
 void bestPlace(struct TabPerson* tp){
-    printf("Best place in birth is %s", getBestPlace(tp));
+    printf("Best place in birth is %s\n", getBestPlace(tp));
 }
 
 void calendar(struct TabPerson* tp, int day, int month){

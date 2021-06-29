@@ -84,7 +84,7 @@ char* getBestPlace(struct TabPerson* tp){
 }
 
 void showBirthForDate(struct TabPerson* tp, int day, int month){
-    printf("Number of Birth for %d/%d : %d\n", day, month, tp->calendar[month][day]);
+    printf("\nNumber of Birth for %d/%d : %d\n", day, month, tp->calendar[month-1][day-1]);
 }
 
 struct Person* createPerson(unsigned int ID, char* fname, char* name, int day, int month, int years, char* birthPlace, struct Person* father, struct Person* mother){
@@ -108,47 +108,46 @@ struct Person* createPerson(unsigned int ID, char* fname, char* name, int day, i
 }
 
 void updateYounger(struct TabPerson* tp, struct Person* p){
-
     if(tp->young != NULL){
-    if(tp->young->years < p->years){    //Si l'année de naissance de la nouvelle personne est plus grande que l'ancienne
+        if(tp->young->years < p->years){    //Si l'année de naissance de la nouvelle personne est plus grande que l'ancienne
                                         //plus jeune personne je remplace les infos
-        tp->young = p;
-    }else{
-    if(tp->young->years== p->years){       //Si les années sont égales je compare les mois et remplace si besoin
-        if(tp->young->month < p->month){
             tp->young = p;
-        }
-        else{
-        if(tp->young->month == p->month){   //Si les mois sont égaux je compare les jours et remplace si besoin
-            if(tp->young->day < p->day){
-
-                tp->young = p;
+        }else{
+            if(tp->young->years== p->years){       //Si les années sont égales je compare les mois et remplace si besoin
+                if(tp->young->month < p->month){
+                    tp->young = p;
+                }else{
+                    if(tp->young->month == p->month){   //Si les mois sont égaux je compare les jours et remplace si besoin
+                        if(tp->young->day < p->day){
+                            tp->young = p;
+                        }
+                    }
+                }
             }
-        }}
-    }}
+        }
     }else{
         tp->young = p;
     }
-
 }
 
 void updateOlder(struct TabPerson* tp, struct Person* p){
-
     if(tp->old != NULL){
         if(tp->old->years > p->years){    //Si l'année de naissance de la nouvelle personne est plus petite que l'ancienne
                                           //plus vieille personne je remplace les infos
             tp->old = p;
         }else{
-        if(tp->old->years == p->years){       //Si les années sont égales je compare les mois et remplace si besoin
-            if(tp->old->month > p->month){
-                tp->old = p;
-            }else{
-            if(tp->old->month == p->month){   //Si les mois sont égaux je compare les jour et remplace si besoin
-                if(tp->old->day > p->day){
+            if(tp->old->years == p->years){       //Si les années sont égales je compare les mois et remplace si besoin
+                if(tp->old->month > p->month){
                     tp->old = p;
+                }else{
+                    if(tp->old->month == p->month){   //Si les mois sont égaux je compare les jour et remplace si besoin
+                        if(tp->old->day > p->day){
+                            tp->old = p;
+                        }
+                    }
                 }
-            }}
-        }}
+            }
+        }
     }else{
         tp->old = p;
     }
@@ -174,6 +173,7 @@ struct TabPerson* createEmptyTabPerson(){
             }
         }
         tp->valBestPlace = 0;               //J'initialise valBestPlace à 0 pour que bestPlace s'actualise correctement
+        tp->places = createEmptyPlacesTree();
         return tp;
     }
     return NULL;

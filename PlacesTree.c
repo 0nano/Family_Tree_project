@@ -38,17 +38,15 @@ bool isAlreadyPlace(struct PlacesTree* pt, char* word){
 
     for (int i = 0; i < n; i++){
         if (getLetters(triePointer)[charToPos(word[i])] == NULL){
-            break;
-        }else{
-            triePointer = getLetters(triePointer)[charToPos(word[i])];
+            return false;
         }
+        triePointer = getLetters(triePointer)[charToPos(word[i])];
     }
 
     if(getIsWord(triePointer)){
         return true;
-    }else{
-        return false;
     }
+    return false;
 }
 
 bool getIsWord(struct PlacesTree* pt){
@@ -105,7 +103,7 @@ int getBirthForPlace(struct PlacesTree* pt, char* word){
     return triePointer->birth;
 }
 
-void upadteBirthForPlace(struct PlacesTree* pt, char* word){
+void updateBirthForPlace(struct PlacesTree* pt, char* word){
     int n = strlen(word);
     struct PlacesTree* triePointer = pt;
 
