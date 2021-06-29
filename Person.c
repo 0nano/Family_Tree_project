@@ -169,14 +169,19 @@ void updateOlder(struct TabPerson* tp, struct Person* p){
 struct TabPerson* createEmptyTabPerson(){
 
     struct TabPerson* tp = malloc(sizeof(struct TabPerson));
-
     if(tp != NULL){
 
         tp->oldPersonYears = 3000;          //Je mets des valeurs aberrantes pour être sur que le plus vieux et plus jeune
         tp->youngPersonYears = -6000;       //s'actualise(ça ne marchera pas si quelqu'un veut faire l'arbre généalogique de cléôpatre)
         tp->length = 0;
+        tp->calendar = malloc(sizeof(int*)*12);
+        if(tp->calendar != NULL){
+            for (int k = 0; k < 12; k++) {
+                tp->calendar[k] = malloc(31 * sizeof(int));
+            }
+        }
         for(int i = 0; i < 12;i++){         //J'initialise tout le calendrier à 0
-            for(int j = 0; i < 31; j++){
+            for(int j = 0; j < 31; j++){
                 tp->calendar[i][j] = 0;
             }
         }
