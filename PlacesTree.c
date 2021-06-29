@@ -105,7 +105,7 @@ int getBirthForPlace(struct PlacesTree* pt, char* word){
     return triePointer->birth;
 }
 
-void upadteBirthForPlace(struct PlacesTree* pt, char* word){
+void updateBirthForPlace(struct PlacesTree* pt, char* word){
     int n = strlen(word);
     struct PlacesTree* triePointer = pt;
 
